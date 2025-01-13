@@ -128,10 +128,9 @@ deals.forEach(d => {
 console.log('Communities: ');
 console.log(communities);
 // 3. Log the number of deals by community
-console.log(communities.forEach(c => {
+Object.keys(communities).forEach(community => { 
   console.log(`${community}: ${communities[community].length} deals`);
-  }));
-
+});
 // 🎯 TODO 9: Sort by price for each community
 // 1. For each community, sort the deals by discount price, from highest to lowest
 // 2. Log the sort
