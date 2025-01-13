@@ -532,7 +532,10 @@ let camera = sealedCamera;
 camera.favorite = true;
 
 // 1. Log `sealedCamera` and `camera` variables
+console.log('SealedCamera: ', sealedCamera);
+console.log('Camera: ', camera);
 // 2. What do you notice?
+//They are the same.
 
 // we make (again) a new assignment again
 sealedCamera = {
@@ -544,7 +547,9 @@ sealedCamera = {
 };
 
 // 3. Update `camera` property with `favorite` to true WITHOUT changing sealedCamera properties
-
+camera.favorite = true;
+console.log('SealedCamera: ', sealedCamera);
+console.log('Camera: ', camera);
 
 // 🎯 TODO 16: Compute the profitability
 // From a specific deal called `deal`
