@@ -597,4 +597,6 @@ console.log('Best matching deal:', result.deal);
 
 // 🎯 LAST TODO: Save in localStorage
 // 1. Save MY_FAVORITE_DEALERS in the localStorage
+localStorage.setItem('MY_FAVORITE_DEALERS', JSON.stringify(MY_FAVORITE_DEALERS));
 // 2. log the localStorage
+console.log('localStorage:', localStorage);
