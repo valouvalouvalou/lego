@@ -437,8 +437,56 @@ const VINTED = [
 
 // 🎯 TODO 11: Compute the average, the p5 and the p25 price value
 // 1. Compute the average price value of the listing
+function calculate_average_price(vinted){
+  var total_price = 0;
+  vinted.forEach(v => {
+    total_price += parseFloat(v.price);
+  });
+  return total_price/vinted.length;
+}
+var vinted_average_price = calculate_average_price(VINTED);
+console.log('Average price value of the listing: ', vinted_average_price);
 // 2. Compute the p5 price value of the listing
+function calculate_percentile(vinted, percentile) {
+  // Trier les données en ordre croissant
+  vinted.sort((v1, v2) => parseFloat(v1.price) - parseFloat(v2.price));
+  
+  // Calculer la position
+  const position = (vinted.length - 1) * (percentile / 100);
+  const lowerIndex = Math.floor(position);
+  const upperIndex = Math.ceil(position);
+  
+  // Interpolation
+  if (lowerIndex === upperIndex) {
+    return vinted[lowerIndex];
+  } else {
+    const weight = position - lowerIndex;
+    return vinted[lowerIndex] + weight * (vinted[upperIndex] - vinted[lowerIndex]);
+  }
+}
+
+function calculate_percentile(vinted, percentile) {
+  const sortedPrices = vinted
+    .map(v => parseFloat(v.price))
+    .filter(price => !isNaN(price))
+    .sort((a, b) => a - b);
+  
+  const position = (sortedPrices.length - 1) * (percentile / 100);
+  const lowerIndex = Math.floor(position);
+  const upperIndex = Math.ceil(position);
+
+  if (lowerIndex === upperIndex) {
+    return sortedPrices[lowerIndex];
+  } else {
+    const weight = position - lowerIndex;
+    return sortedPrices[lowerIndex] + weight * (sortedPrices[upperIndex] - sortedPrices[lowerIndex]);
+  }
+}
+var p5_price = calculate_percentile(VINTED, 5);
+console.log('p5 price value of the listing: ', p5_price);
 // 3. Compute the p25 price value of the listing
+var p25_price = calculate_percentile(VINTED, 25);
+console.log('p25 price value of the listing: ', p25_price);
 // The p25 value (25th percentile) is the lower value expected to be exceeded in 25% of the vinted items
 
 // 🎯 TODO 12: Very old listed items
@@ -453,7 +501,7 @@ const VINTED = [
 // 1. Delete the item with the uuid `f2c5377c-84f9-571d-8712-98902dcbb913`
 // 2. Log the new list of items
 
-// 🎯 TODO 5: Save a favorite item
+// 🎯 TODO 15: Save a favorite item
 // We declare and assign a variable called `sealedCamera`
 let sealedCamera = {
   link: "https://www.vinted.fr/items/5563396347-lego-43230-omaggio-a-walter-disney-misb",
@@ -484,7 +532,7 @@ sealedCamera = {
 // 3. Update `camera` property with `favorite` to true WITHOUT changing sealedCamera properties
 
 
-// 🎯 TODO 11: Compute the profitability
+// 🎯 TODO 16: Compute the profitability
 // From a specific deal called `deal`
 const deal = {
   'title':  'La caméra Hommage à Walt Disney',
