@@ -561,7 +561,31 @@ const deal = {
 }
 
 // 1. Compute the potential highest profitability based on the VINTED items
+function calculateProfitability(retail, price) {
+  return ((price - retail) / retail) * 100;
+}
+function findHighestProfitability(vinted, legoId) {
+  const filteredItems = vinted.filter(i => i.title.includes(legoId));
+  
+  if (filteredItems.length === 0) return 0;
+  
+  const profitabilityValues = filteredItems.map(item => {
+    const retail = parseFloat(deal.retail);
+    const price = parseFloat(item.price);
+    return {
+      item,
+      profitability: calculateProfitability(retail, price)
+    };
+  });
+
+  const bestDeal = profitabilityValues.reduce((max, current) => current.profitability > max.profitability ? current : max);
+
+  return { maxProfit: bestDeal.profitability, deal: bestDeal.item };
+}
+const result = findHighestProfitability(VINTED, deal.legoId);
 // 2. Log the value
+console.log('Potential highest profitability for the deal:', result.maxProfit.toFixed(2), '%');
+console.log('Best matching deal:', result.deal);
 
 
 
