@@ -511,7 +511,9 @@ console.log('Item with the uuid `f2c5377c-84f9-571d-8712-98902dcbb913`: ', item_
 
 // 🎯 TODO 14: Delete a specific item
 // 1. Delete the item with the uuid `f2c5377c-84f9-571d-8712-98902dcbb913`
+VINTED.pop(item => item.uuid == 'f2c5377c-84f9-571d-8712-98902dcbb913');
 // 2. Log the new list of items
+console.log('New list of items: ', VINTED);
 
 // 🎯 TODO 15: Save a favorite item
 // We declare and assign a variable called `sealedCamera`
