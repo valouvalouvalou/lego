@@ -53,8 +53,7 @@ console.log('Number of deals: ' + number_of_deals);
 // 1. Create a variable and assign it the list of shopping community name only
 var shopping_community_name = deals.map( d => d.community);
 // 2. Log the variable
-console.log('List of shopping community name only: ');
-console.log(shopping_community_name);
+console.log('List of shopping community name only: ', shopping_community_name);
 // 3. Log how many shopping communities we have
 console.log(shopping_community_name.length);
 
@@ -66,23 +65,23 @@ function sort_deals_by_price(deals){
 // 2. Create a variable and assign it the list of sets by price from lowest to highest
 var sets_by_price_from_lowest_to_highest = sort_deals_by_price(deals);
 // 3. Log the variable
-console.log('List of sets by price from lowest to highest: ');
-console.log(sets_by_price_from_lowest_to_highest);
+console.log('List of sets by price from lowest to highest: ', sets_by_price_from_lowest_to_highest);
 
 // 🎯 TODO 5: Sort by date
 // 1. Create a function to sort the deals by date
 function sort_deals_by_date(deals){
-  return deals;
+  return deals.sort((a, b) => new Date(b.published) - new Date(a.published));
 }
 // 2. Create a variable and assign it the list of deals by date from recent to old
+const deals_by_date_recent_to_old = sort_deals_by_date(deals);
 // 3. Log the variable
+console.log('List of deals by date from recent to old:', deals_by_date_recent_to_old); 
 
 // 🎯 TODO 6: Filter a specific percentage discount range
 // 1. Filter the list of deals between 50% and 75%
 var deals_50_to_75_discount = deals.filter(d => d.discount >= 50 && d.discount <=75);
 // 2. Log the list
-console.log('List of deals between 50% and 75%: ');
-console.log(deals_50_to_75_discount);
+console.log('List of deals between 50% and 75%: ', deals_50_to_75_discount);
 
 // 🎯 TODO 7: Average percentage discount
 // 1. Determine the average percentage discount of the deals
@@ -95,7 +94,7 @@ function calculate_average_discount(deals){
 }
 var deals_average_discount = calculate_average_discount(deals);
 // 2. Log the average
-console.log('Average percentage discount of the deals: ' + deals_average_discount);
+console.log('Average percentage discount of the deals: ', deals_average_discount);
 
 /**
  * 🏎
@@ -125,20 +124,31 @@ deals.forEach(d => {
   communities[d.community].push(d);
 });
 // 2. Log the variable
-console.log('Communities: ');
-console.log(communities);
+console.log('Communities: ', communities);
 // 3. Log the number of deals by community
-Object.keys(communities).forEach(community => { 
+for (const community in communities) {
   console.log(`${community}: ${communities[community].length} deals`);
-});
+}
+
 // 🎯 TODO 9: Sort by price for each community
 // 1. For each community, sort the deals by discount price, from highest to lowest
+var deals_by_price_highest_to_lowest = {};
+for (const community in communities) {
+  deals_by_price_highest_to_lowest[community] = communities[community].slice();
+  deals_by_price_highest_to_lowest[community].sort((d1, d2) => d2.price - d1.price);
+}
 // 2. Log the sort
+console.log('For each community, the deals by discount price, from highest to lowest: ', deals_by_price_highest_to_lowest);
 
 // 🎯 TODO 10: Sort by date for each community
 // 1. For each set, sort the deals by date, from old to recent
+var deals_by_date_old_to_recent = {};
+for (const community in communities) {
+  deals_by_date_old_to_recent[community] = communities[community].slice();
+  deals_by_date_old_to_recent[community].sort((d1, d2) => new Date(d1.published) - new Date(d2.published));
+}
 // 2. Log the sort
-
+console.log('For each community, the deals by date, from old to recent: ', deals_by_date_old_to_recent);
 
 /**
  * 🧥
