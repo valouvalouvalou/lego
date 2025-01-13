@@ -493,11 +493,11 @@ console.log('p25 price value of the listing: ', p25_price);
 // // 1. Log if we have very old items (true or false)
 function hasItemsPublished3WeeksAgo(vinted) {
   const threeWeeksAgo = new Date();
-  threeWeeksAgo.setDate(threeWeeksAgo.getDate() - 21); // 21 jours = 3 semaines
+  threeWeeksAgo.setDate(threeWeeksAgo.getDate() - 21);
 
   return vinted.some(item => {
     const publishedDate = new Date(item.published);
-    return publishedDate <= threeWeeksAgo; // Vérifie si publié il y a 3 semaines ou plus
+    return publishedDate <= threeWeeksAgo;
   });
 }
 console.log('Do we have very old items (true or false) ? ', hasItemsPublished3WeeksAgo(VINTED))
