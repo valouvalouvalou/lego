@@ -491,6 +491,16 @@ console.log('p25 price value of the listing: ', p25_price);
 
 // 🎯 TODO 12: Very old listed items
 // // 1. Log if we have very old items (true or false)
+function hasItemsPublished3WeeksAgo(vinted) {
+  const threeWeeksAgo = new Date();
+  threeWeeksAgo.setDate(threeWeeksAgo.getDate() - 21); // 21 jours = 3 semaines
+
+  return vinted.some(item => {
+    const publishedDate = new Date(item.published);
+    return publishedDate <= threeWeeksAgo; // Vérifie si publié il y a 3 semaines ou plus
+  });
+}
+console.log('Do we have very old items (true or false) ? ', hasItemsPublished3WeeksAgo(VINTED))
 // // A very old item is an item `published` more than 3 weeks ago.
 
 // 🎯 TODO 13: Find a specific item
