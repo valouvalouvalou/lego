@@ -24,6 +24,7 @@ This endpoint accepts the following optional query string parameters:
 // current deals on the page
 let currentDeals = [];
 let currentPagination = {};
+let nbDealsPerPage = 6;
 
 // instantiate the selectors
 const selectShow = document.querySelector('#show-select');
@@ -130,6 +131,7 @@ const renderIndicators = pagination => {
   spanNbDeals.innerHTML = count;
 };
 
+
 const render = (deals, pagination) => {
   renderDeals(deals);
   renderPagination(pagination);
@@ -145,10 +147,16 @@ const render = (deals, pagination) => {
  * Select the number of deals to display
  */
 selectShow.addEventListener('change', async (event) => {
-  const deals = await fetchDeals(currentPagination.currentPage, parseInt(event.target.value));
-
-  setCurrentDeals(deals);
-  render(currentDeals, currentPagination);
+  if(parseInt(event.target.value) * (currentPagination.currentPage-1) <= currentPagination.count){
+    const deals = await fetchDeals(currentPagination.currentPage, parseInt(event.target.value));
+    nbDealsPerPage = parseInt(event.target.value);
+    setCurrentDeals(deals);
+    render(currentDeals, currentPagination);
+  }
+  else{
+    event.target.value = nbDealsPerPage;
+    alert("Change page to change the number of deals per page");
+  }
 });
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -157,3 +165,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   setCurrentDeals(deals);
   render(currentDeals, currentPagination);
 });
+
+/**
+ * Select the page to browse
+ */
+selectPage.addEventListener('change', async (event) => {
+  const deals = await fetchDeals(parseInt(event.target.value), nbDealsPerPage);
+
+  setCurrentDeals(deals);
+  render(currentDeals, currentPagination);
+});
+
