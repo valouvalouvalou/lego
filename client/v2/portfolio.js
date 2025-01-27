@@ -32,6 +32,7 @@ const selectPage = document.querySelector('#page-select');
 const selectLegoSetIds = document.querySelector('#lego-set-id-select');
 const sectionDeals= document.querySelector('#deals');
 const spanNbDeals = document.querySelector('#nbDeals');
+const selectSort = document.querySelector('#sort-select');
 
 // instantiate the buttons
 const bestDiscount = document.querySelector('#best-discount');
@@ -213,6 +214,30 @@ hotDeals.addEventListener("click", async() => {
   deals.result = deals.result.filter(deal => {
     return deal.temperature > 100;
   });
+  setCurrentDeals(deals);
+  render(currentDeals, currentPagination);
+});
+
+/**
+ * Sort by price
+ */
+selectSort.addEventListener('change', async (event) => {
+  const deals = await fetchDeals(currentPagination.currentPage, nbDealsPerPage);
+  switch(event.target.value){
+    case "price-asc":
+      deals.result = deals.result.sort((deal1, deal2) => {
+        return deal1.price - deal2.price;
+      });
+    case "price-desc":
+      deals.result = deals.result.sort((deal1, deal2) => {
+        return deal2.price - deal1.price;
+      });
+    case "date-asc":
+      //deals;
+    case "date-desc":
+      //deals;
+  }
+
   setCurrentDeals(deals);
   render(currentDeals, currentPagination);
 });
