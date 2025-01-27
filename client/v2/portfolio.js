@@ -225,17 +225,17 @@ selectSort.addEventListener('change', async (event) => {
   const deals = await fetchDeals(currentPagination.currentPage, nbDealsPerPage);
   switch(event.target.value){
     case "price-asc":
-      deals.result = deals.result.sort((deal1, deal2) => {
-        return deal1.price - deal2.price;
-      });
+      deals.result = deals.result.sort((deal1, deal2) => parseInt(deal1.price) - parseInt(deal2.price));
+      break;
     case "price-desc":
-      deals.result = deals.result.sort((deal1, deal2) => {
-        return deal2.price - deal1.price;
-      });
+      deals.result = deals.result.sort((deal1, deal2) => parseInt(deal2.price) - parseInt(deal1.price));
+      break;
     case "date-asc":
-      //deals;
+      deals.result = deals.result.sort((deal1, deal2) => deal1.published - deal2.published);
+      break;
     case "date-desc":
-      //deals;
+      deals.result = deals.result.sort((deal1, deal2) => deal2.published - deal1.published);
+      break;
   }
 
   setCurrentDeals(deals);
