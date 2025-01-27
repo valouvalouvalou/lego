@@ -248,6 +248,9 @@ selectSort.addEventListener('change', async (event) => {
 // current sales on the page
 let currentSales = [];
 
+// instantiate the selectors
+const spanNbSales = document.querySelector('#nbSales');
+
 /**
  * Set global value
  * @param {Array} result - sales to display
@@ -305,6 +308,37 @@ const renderSales = sales => {
   sectionDeals.appendChild(fragment);
 };
 
+const renderNbSales = sales => {
+  const fragment = document.createDocumentFragment();
+  const div = document.createElement('div');
+  const template = sales
+    .map(sale => {
+      return `
+      <div class="sale" id=${sale.uuid}>
+        <a href="${sale.link}">${sale.title}</a>
+        <span>${sale.price}</span>
+        <span>${sale.published}</span>
+      </div>
+    `;
+    })
+    .join('');
+
+  div.innerHTML = template;
+  fragment.appendChild(div);
+  sectionDeals.innerHTML = '<h2>Sales</h2>';
+  sectionDeals.appendChild(fragment);
+};
+
+const renderIndicatorsSales = (sales) => {
+  spanNbSales.innerHTML = sales.length;
+
+};
+
+const renderS = (sales) => {
+  renderSales(sales);
+  renderIndicatorsSales(sales);
+};
+
 /**
  * Display vinted sales
  */
@@ -312,5 +346,5 @@ selectLegoSetIds.addEventListener('change', async (event) => {
   const sales = await fetchSales(parseInt(event.target.value));
 
   setCurrentSales(sales);
-  renderSales(currentSales);
+  renderS(currentSales);
 });
