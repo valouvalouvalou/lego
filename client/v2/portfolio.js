@@ -33,6 +33,11 @@ const selectLegoSetIds = document.querySelector('#lego-set-id-select');
 const sectionDeals= document.querySelector('#deals');
 const spanNbDeals = document.querySelector('#nbDeals');
 
+// instantiate the buttons
+const bestDiscount = document.querySelector('#best-discount');
+const mostCommented = document.querySelector('#most-commented');
+const hotDeals = document.querySelector('#hot-deals');
+
 /**
  * Set global value
  * @param {Array} result - deals to display
@@ -53,7 +58,7 @@ const fetchDeals = async (page = 1, size = 6) => {
   try {
     const response = await fetch(
       `https://lego-api-blue.vercel.app/deals?page=${page}&size=${size}`
-    );
+      );
     const body = await response.json();
 
     if (body.success !== true) {
@@ -176,3 +181,38 @@ selectPage.addEventListener('change', async (event) => {
   render(currentDeals, currentPagination);
 });
 
+/**
+ * Filter by best discount
+ */
+bestDiscount.addEventListener("click", async() => {
+  const deals = await fetchDeals(currentPagination.currentPage, nbDealsPerPage);
+  deals.result = deals.result.filter(deal => {
+    return deal.discount > 50;
+  });
+  setCurrentDeals(deals);
+  render(currentDeals, currentPagination);
+});
+
+/**
+ * Filter by most commented
+ */
+mostCommented.addEventListener("click", async() => {
+  const deals = await fetchDeals(currentPagination.currentPage, nbDealsPerPage);
+  deals.result = deals.result.filter(deal => {
+    return deal.comments > 15;
+  });
+  setCurrentDeals(deals);
+  render(currentDeals, currentPagination);
+});
+
+/**
+ * Filter by hot deals
+ */
+hotDeals.addEventListener("click", async() => {
+  const deals = await fetchDeals(currentPagination.currentPage, nbDealsPerPage);
+  deals.result = deals.result.filter(deal => {
+    return deal.temperature > 100;
+  });
+  setCurrentDeals(deals);
+  render(currentDeals, currentPagination);
+});
