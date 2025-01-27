@@ -219,7 +219,7 @@ hotDeals.addEventListener("click", async() => {
 });
 
 /**
- * Sort by price
+ * Sort by price and by date
  */
 selectSort.addEventListener('change', async (event) => {
   const deals = await fetchDeals(currentPagination.currentPage, nbDealsPerPage);
@@ -240,4 +240,77 @@ selectSort.addEventListener('change', async (event) => {
 
   setCurrentDeals(deals);
   render(currentDeals, currentPagination);
+});
+
+
+
+
+// current sales on the page
+let currentSales = [];
+
+/**
+ * Set global value
+ * @param {Array} result - sales to display
+ */
+const setCurrentSales = ({result}) => {
+  currentSales = result;
+};
+
+/**
+ * Fetch sales from api
+ * @param  {Number}  [id=42182] - id to fetch
+ * @return {Object}
+ */
+const fetchSales = async (id = 42182) => {
+  try {
+    const response = await fetch(      
+      `https://lego-api-blue.vercel.app/sales?id=${id}`
+      );
+    const body = await response.json();
+
+    if (body.success !== true) {
+      console.error(body);
+      return {currentSales, currentPagination};
+    }
+
+    return body.data;
+  } catch (error) {
+    console.error(error);
+    return {currentDeals, currentPagination};
+  }
+};
+
+/**
+ * Render list of deals
+ * @param  {Array} sales
+ */
+const renderSales = sales => {
+  const fragment = document.createDocumentFragment();
+  const div = document.createElement('div');
+  const template = sales
+    .map(sale => {
+      return `
+      <div class="sale" id=${sale.uuid}>
+        <a href="${sale.link}">${sale.title}</a>
+        <span>${sale.price}</span>
+        <span>${sale.published}</span>
+      </div>
+    `;
+    })
+    .join('');
+
+  div.innerHTML = template;
+  fragment.appendChild(div);
+  sectionDeals.innerHTML = '<h2>Sales</h2>';
+  sectionDeals.appendChild(fragment);
+};
+
+/**
+ * Display vinted sales
+ */
+selectLegoSetIds.addEventListener('change', async (event) => {
+  const sales = await fetchSales(parseInt(event.target.value));
+
+  setCurrentSales(sales);
+  renderSales(currentSales);
 });
