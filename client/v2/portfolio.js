@@ -250,6 +250,11 @@ let currentSales = [];
 
 // instantiate the selectors
 const spanNbSales = document.querySelector('#nbSales');
+const spanP5Value = document.querySelector('#p5Value');
+const spanP25Value = document.querySelector('#p25Value');
+const spanP50Value = document.querySelector('#p50Value');
+
+
 
 /**
  * Set global value
@@ -331,7 +336,9 @@ const renderNbSales = sales => {
 
 const renderIndicatorsSales = (sales) => {
   spanNbSales.innerHTML = sales.length;
-
+  spanP5Value.innerHTML = calculatePercentile(sales, 5);
+  spanP25Value.innerHTML = calculatePercentile(sales, 25);
+  spanP50Value.innerHTML = calculatePercentile(sales, 50);
 };
 
 const renderS = (sales) => {
@@ -348,3 +355,26 @@ selectLegoSetIds.addEventListener('change', async (event) => {
   setCurrentSales(sales);
   renderS(currentSales);
 });
+
+/**
+ * p5, p25 and p50 price value indicators
+ */
+function calculatePercentile(sales, percentile) {
+  // Trier les ventes par prix (valeur numérique)
+  sales.sort((s1, s2) => parseFloat(s1.price) - parseFloat(s2.price));
+  
+  const position = (sales.length - 1) * (percentile / 100);
+  const lowerIndex = Math.floor(position);
+  const upperIndex = Math.ceil(position);
+  
+  if (lowerIndex === upperIndex) {
+    // Retourner le prix à l'index calculé
+    return parseFloat(sales[lowerIndex].price);
+  } else {
+    const weight = position - lowerIndex;
+    const lowerPrice = parseFloat(sales[lowerIndex].price);
+    const upperPrice = parseFloat(sales[upperIndex].price);
+    // Calculer la valeur interpolée
+    return lowerPrice + weight * (upperPrice - lowerPrice);
+  }
+}
