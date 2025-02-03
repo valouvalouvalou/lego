@@ -378,3 +378,12 @@ function calculatePercentile(sales, percentile) {
     return lowerPrice + weight * (upperPrice - lowerPrice);
   }
 }
+
+/**
+ * Lifetime value
+ */
+/*function calculateLifetimeValue(sales){
+  const lifetime = Date.now() - parseInt(sales.published);
+
+
+}*/
