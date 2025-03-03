@@ -40,7 +40,7 @@ module.exports.scrape = async url => {
         const body = await response.text();
         const deals = parse(body);
         
-        fs.appendFileSync('lego_deals_from_dealabs.json', JSON.stringify(deals, null, 2), 'utf-8');
+        fs.writeFileSync('lego_deals_from_dealabs.json', JSON.stringify(deals, null, 2), 'utf-8');
         console.log('✅ Deals enregistrés dans lego_deals_from_dealabs.json');
 
         return deals;
