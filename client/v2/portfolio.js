@@ -86,7 +86,7 @@ const renderDeals = deals => {
       return `
       <div class="deal" id=${deal.uuid}>
         <span>${deal.id}</span>
-        <a href="${deal.link}">${deal.title}</a>
+        <a href="${deal.link}" target="_blank">${deal.title}</a>
         <span>${deal.price}</span>
       </div>
     `;
@@ -249,6 +249,7 @@ selectSort.addEventListener('change', async (event) => {
 let currentSales = [];
 
 // instantiate the selectors
+const sectionSales = document.querySelector('#sales');
 const spanNbSales = document.querySelector('#nbSales');
 const spanP5Value = document.querySelector('#p5Value');
 const spanP25Value = document.querySelector('#p25Value');
@@ -299,7 +300,7 @@ const renderSales = sales => {
     .map(sale => {
       return `
       <div class="sale" id=${sale.uuid}>
-        <a href="${sale.link}">${sale.title}</a>
+        <a href="${sale.link}" target="_blank">${sale.title}</a>
         <span>${sale.price}</span>
         <span>${sale.published}</span>
       </div>
@@ -309,29 +310,8 @@ const renderSales = sales => {
 
   div.innerHTML = template;
   fragment.appendChild(div);
-  sectionDeals.innerHTML = '<h2>Sales</h2>';
-  sectionDeals.appendChild(fragment);
-};
-
-const renderNbSales = sales => {
-  const fragment = document.createDocumentFragment();
-  const div = document.createElement('div');
-  const template = sales
-    .map(sale => {
-      return `
-      <div class="sale" id=${sale.uuid}>
-        <a href="${sale.link}">${sale.title}</a>
-        <span>${sale.price}</span>
-        <span>${sale.published}</span>
-      </div>
-    `;
-    })
-    .join('');
-
-  div.innerHTML = template;
-  fragment.appendChild(div);
-  sectionDeals.innerHTML = '<h2>Sales</h2>';
-  sectionDeals.appendChild(fragment);
+  sectionSales.innerHTML = '<h2>Sales</h2>';
+  sectionSales.appendChild(fragment);
 };
 
 const renderIndicatorsSales = (sales) => {
@@ -409,3 +389,4 @@ function formatDuration(seconds) {
     if (days > 0) return `${days} days`;
     return `${hours} hours`;
 }
+
