@@ -253,7 +253,7 @@ const spanNbSales = document.querySelector('#nbSales');
 const spanP5Value = document.querySelector('#p5Value');
 const spanP25Value = document.querySelector('#p25Value');
 const spanP50Value = document.querySelector('#p50Value');
-
+const spanLifetimeValue = document.querySelector('#lifetimeValue');
 
 
 /**
@@ -289,7 +289,7 @@ const fetchSales = async (id = 42182) => {
 };
 
 /**
- * Render list of deals
+ * Render list of sales
  * @param  {Array} sales
  */
 const renderSales = sales => {
@@ -339,6 +339,7 @@ const renderIndicatorsSales = (sales) => {
   spanP5Value.innerHTML = calculatePercentile(sales, 5);
   spanP25Value.innerHTML = calculatePercentile(sales, 25);
   spanP50Value.innerHTML = calculatePercentile(sales, 50);
+  spanLifetimeValue.innerHTML = calculateLifetimeValue(sales);
 };
 
 const renderS = (sales) => {
@@ -382,8 +383,29 @@ function calculatePercentile(sales, percentile) {
 /**
  * Lifetime value
  */
-/*function calculateLifetimeValue(sales){
-  const lifetime = Date.now() - parseInt(sales.published);
+function calculateLifetimeValue(sales){
+  if (sales.length === 0) return "0 hours";
 
+  const now = new Date();
 
-}*/
+  let totalSeconds = 0;
+  for (const sale of sales) {
+    const publishedDate = new Date(sale.published); 
+    totalSeconds += (now - publishedDate) / 1000;
+  }
+    
+    const averageSeconds = totalSeconds / sales.length;
+    return formatDuration(averageSeconds);
+}
+
+function formatDuration(seconds) {
+    const days = Math.floor(seconds / 86400);
+    const months = Math.floor(days / 30);
+    const years = Math.floor(months / 12);
+    const hours = Math.floor((seconds % 86400) / 3600);
+    
+    if (years > 0) return `${years} years`;
+    if (months > 0) return `${months} months`;
+    if (days > 0) return `${days} days`;
+    return `${hours} hours`;
+}
