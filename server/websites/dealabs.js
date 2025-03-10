@@ -31,15 +31,19 @@ const parse = data => {
     .map((i, element) => {
         const title = $(element).find('.thread-title a').attr('title');
         const link = $(element).find('.thread-title a').attr('href');
-        console.log($(element).html());
-        //const price = parseFloat($(element).find('.thread-price').text().replace('€', '').trim().replace(',', '.'));
-        //console.log($(element).find('.thread-price').text);
-        const price = parseFloat($(element).find('.vAlign--all-tt span').text());
-
+        const data = JSON.parse($(element).find('.js-vue2').attr('data-vue2'));
+        const price = data.props.thread.price;
+        const commentCount = data.props.thread.commentCount;
+        const temperature = data.props.thread.temperature;
+        const publishedDate = data.props.thread.publishedAt;
+        
       return {
         title,
         link,
-        price
+        price,
+        commentCount,
+        temperature,
+        publishedDate
       };
     })
     .get();
