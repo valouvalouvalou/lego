@@ -10,28 +10,12 @@ const fs = require('fs');
 const parse = data => {
   const $ = cheerio.load(data, {'xmlMode': true});
 
-  /*return $('div.js-threadList article')
-    .map((i, element) => {
-        const title = $(element).find('.thread-title a').attr('title');
-        const link = $(element).find('.thread-title a').attr('href');
-        console.log($(element).find('.vAlign--all-tt span').attr('class'));
-        //const price = parseFloat($(element).find('.thread-price').text().replace('€', '').trim().replace(',', '.'));
-        //console.log($(element).find('.thread-price').text);
-        const price = parseFloat($(element).find('.vAlign--all-tt span').text());
-
-      return {
-        title,
-        link,
-        price
-      };
-    })
-    .get();*/
-
   return $('div.js-threadList article')
     .map((i, element) => {
         const title = $(element).find('.thread-title a').attr('title');
-        const link = $(element).find('.thread-title a').attr('href');
+        const linkDealabs = $(element).find('.thread-title a').attr('href');
         const data = JSON.parse($(element).find('.js-vue2').attr('data-vue2'));
+        const linkSeller = data.props.thread.link;
         const price = data.props.thread.price;
         const commentCount = data.props.thread.commentCount;
         const temperature = data.props.thread.temperature;
@@ -39,7 +23,8 @@ const parse = data => {
         
       return {
         title,
-        link,
+        linkDealabs,
+        linkSeller,
         price,
         commentCount,
         temperature,
