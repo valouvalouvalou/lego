@@ -2,6 +2,14 @@ const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 const fs = require('fs');
 
+// Fonction pour extraire l'ID du set LEGO
+function extractLegoSetId(title) {
+  // Utilisation d'une expression régulière pour extraire un nombre à 5 chiffres
+  const regex = /\b(\d{5,})\b/;
+  const match = title.match(regex);
+  return match ? match[1] : null;
+}
+
 /**
  * Parse webpage data response
  * @param  {String} data - html response
@@ -14,6 +22,7 @@ const parse = data => {
     .map((i, element) => {
         const title = $(element).find('.thread-title a').attr('title');
         const linkDealabs = $(element).find('.thread-title a').attr('href');
+        const idLego = extractLegoSetId(title);
         const data = JSON.parse($(element).find('.js-vue2').attr('data-vue2'));
         const linkSeller = data.props.thread.link;
         const price = data.props.thread.price;
@@ -23,6 +32,7 @@ const parse = data => {
         
       return {
         title,
+        idLego,
         linkDealabs,
         linkSeller,
         price,
@@ -52,7 +62,7 @@ module.exports.scrape = async url => {
         const deals = parse(body);
         
         fs.writeFileSync('lego_deals_from_dealabs.json', JSON.stringify(deals, null, 2), 'utf-8');
-        console.log('✅ Deals enregistrés dans lego_deals_from_dealabs.json');
+        console.log('✅ Deals saved in lego_deals_from_dealabs.json');
 
         return deals;
     }
