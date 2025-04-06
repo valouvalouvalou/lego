@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-process-exit */
-const avenuedelabrique = require('./websites/avenuedelabrique');
+const avenuedelabrique = require('../websites/avenuedelabrique');
 
 async function sandbox (website = 'https://www.avenuedelabrique.com/nouveautes-lego') {
   try {

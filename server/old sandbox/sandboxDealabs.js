@@ -1,6 +1,6 @@
 /* eslint-disable no-console, no-process-exit */
 
-const dealabs = require('./websites/dealabs');
+const dealabs = require('../websites/dealabs');
 
 async function sandbox (website = 'https://www.dealabs.com/groupe/lego') {
   try {

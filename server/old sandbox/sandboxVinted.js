@@ -1,6 +1,6 @@
 /* eslint-disable no-console, no-process-exit */
 
-const vinted = require('./websites/vinted');
+const vinted = require('../websites/vinted');
 
 async function sandbox (id = 42182) {
   try {
