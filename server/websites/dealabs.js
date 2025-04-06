@@ -62,7 +62,7 @@ module.exports.scrape = async url => {
         const deals = parse(body);
         
         fs.writeFileSync('lego_deals_from_dealabs.json', JSON.stringify(deals, null, 2), 'utf-8');
-        console.log('✅ Deals saved in lego_deals_from_dealabs.json');
+        //console.log('✅ Deals saved in lego_deals_from_dealabs.json');
 
         return deals;
     }

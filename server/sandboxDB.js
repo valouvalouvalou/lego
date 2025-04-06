@@ -66,9 +66,7 @@ async function main(){
 
         // Scraping Vinted for each Dealabs ID
         for (const id of ids) {
-            const website = `https://www.vinted.fr/api/v2/catalog/items?page=1&per_page=96&time=1741851955&search_text=${id}&catalog_ids=&size_ids=&brand_ids=89162&status_ids=&color_ids=&material_ids=`;
-            //console.log(` ID : ${id} `);
-            //console.log(` Website ${website} `);
+            const website = `https://www.vinted.fr/api/v2/catalog/items?page=1&per_page=96&time=1743930904&search_text=${id}&catalog_ids=&size_ids=&brand_ids=89162&status_ids=&color_ids=&material_ids=`;
             const vintedSales = await vinted.scrape(website, id);
             console.log(`✅ Vinted scraping for ID ${id} completed successfully!`);
             
