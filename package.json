@@ -9,6 +9,7 @@
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "helmet": "^8.0.0",
+    "mongodb": "^6.15.0",
     "node-fetch": "^2.7.0",
     "parse-domain": "^8.2.2",
     "puppeteer": "^24.4.0",
@@ -17,5 +18,8 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
+  },
+  "scripts": {
+    "dev": "nodemon server/api.js"
   }
 }

@@ -1,0 +1,23 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "api/*.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/deals/search",
+        "dest": "/api/deals-search.js"
+      },
+      {
+        "src": "/deals/:id",
+        "dest": "/api/deals-id.js"
+      },
+      {
+        "src": "/sales/search",
+        "dest": "/api/sales-search.js"
+      }
+    ]
+  }

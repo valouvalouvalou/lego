@@ -14,17 +14,8 @@ async function connectDB() {
 async function closeDB(client) {
     if (client) {
         await client.close();
-        console.log('Connexion fermée');
+        console.log('Connection closed');
     }
 }
 
-function readJSON(filePath) {
-    try {
-        return JSON.parse(fs.readFileSync(path.join(__dirname, 'data', filePath), 'utf8'));
-    } catch (error) {
-        console.error(`❌ Erreur de lecture du fichier ${filePath} :`, error);
-        return null;
-    }
-}
-
-module.exports = { connectDB, readJSON };
+module.exports = { connectDB };
