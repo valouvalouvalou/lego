@@ -1,6 +1,7 @@
 const cors = require('cors');
 const express = require('express');
 const helmet = require('helmet');
+require('dotenv').config();
 
 const { ObjectId } = require('mongodb');
 const { MongoClient } = require('mongodb');
@@ -21,7 +22,7 @@ app.get('/', (request, response) => {
   response.send({'ack': true});
 });
 
-const uri = 'mongodb+srv://vvdvrt:rootvdvrt@lego.nxeqm.mongodb.net/DB_Lego?retryWrites=true&writeConcern=majority';
+const uri = process.env.MONGODB_URI;
 const dbName = 'DB_Lego'; // Nom de la base de données
 
 // Fonction pour se connecter à la base de données
@@ -175,9 +176,3 @@ app.get('/sales/search', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`📡 Running on port ${PORT}`);
 });
-
-
-
-//app.listen(PORT);
-
-//console.log(`📡 Running on port ${PORT}`);

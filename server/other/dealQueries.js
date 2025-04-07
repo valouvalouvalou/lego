@@ -1,6 +1,7 @@
 const { MongoClient } = require('mongodb');
+require('dotenv').config();
 
-const MONGODB_URI = 'mongodb+srv://vvdvrt:rootvdvrt@lego.nxeqm.mongodb.net/DB_Lego?retryWrites=true&writeConcern=majority';
+const MONGODB_URI = process.env.MONGODB_URI;
 const client = new MongoClient(MONGODB_URI, { useNewUrlParser: true });
 
 async function connectToDatabase() {

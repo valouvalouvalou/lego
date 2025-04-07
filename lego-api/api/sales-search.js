@@ -1,4 +1,5 @@
 const { MongoClient } = require('mongodb');
+require('dotenv').config();
 
 async function getDB() {
     const uri = process.env.MONGODB_URI;  // Utiliser la variable d'environnement
@@ -14,7 +15,11 @@ async function getDB() {
     }
   }
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
+    if (req.method !== 'GET') {
+      return res.status(405).end(); // Method Not Allowed
+    }
+
     try {
       const { limit = 12, legoSetId, price } = req.query;
       const db = await getDB();

@@ -1,5 +1,6 @@
 const { ObjectId } = require('mongodb');
 const { MongoClient } = require('mongodb');
+require('dotenv').config();
 
 async function getDB() {
     const uri = process.env.MONGODB_URI;  // Utiliser la variable d'environnement
@@ -16,8 +17,13 @@ async function getDB() {
   }
 
 
-module.exports = async (req, res) => {
-  const dealId = req.params.id;  // L'ID du deal est passé dans la query string (?id=...)
+export default async function handler(req, res) {
+  if (req.method !== 'GET') {
+    return res.status(405).end(); // Method Not Allowed
+  }
+    
+  const url = new URL(req.url, `http://${req.headers.host}`);
+  const dealId = url.pathname.split('/').pop(); 
   try {
     if (!ObjectId.isValid(dealId)) {
       return res.status(400).send('Invalid ID format');
