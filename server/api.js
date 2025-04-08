@@ -134,15 +134,15 @@ app.get('/deals/:id', async (req, res) => {
 });*/
 app.get('/sales/search', async (req, res) => {
   try {
-    const { limit = 12, legoSetId, price } = req.query;
+    const { limit = 12, idLego, price } = req.query;
     const db = await getDB();
     const collection = db.collection('Vinted');
 
     const query = {};
 
     // Requête de recherche pour le legoSetId
-    if (legoSetId) {
-      query.idLego = { $eq: legoSetId };
+    if (idLego) {
+      query.idLego = { $eq: idLego };
     }
 
     // On ajoute un champ "priceAsNumber" converti en number

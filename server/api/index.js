@@ -27,6 +27,12 @@ const connectDB = async () => {
   }
 }
 
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+  });
 
 app.get('/', async (req, res) => {
     res.send('API is working!');
@@ -35,7 +41,7 @@ app.get('/', async (req, res) => {
 // Endpoint GET /deals/search
 app.get('/deals/search', async (req, res) => {
     try {
-      const { limit = 12, price, date, filterBy } = req.query;
+      const { limit = 12, price, date, filterBy, idLego } = req.query;
       const db = await connectDB();
       const collection = db.collection('Dealabs');
   
@@ -57,6 +63,10 @@ app.get('/deals/search', async (req, res) => {
         query.commentCount = { $gte: 20}; // Exemple : filtrer les deals avec plus de 20 commentaires
       }
   
+      if (idLego) {
+        query.idLego = idLego;
+      }
+
       const deals = await collection
         .find(query)
         .limit(parseInt(limit))
@@ -67,6 +77,20 @@ app.get('/deals/search', async (req, res) => {
     } catch (error) {
       console.error('Erreur lors de la recherche des deals :', error);
       res.status(500).send('Erreur lors de la recherche des deals');
+    }
+  });
+
+app.get('/deals/idLego', async (req, res) => {
+    try {
+      const db = await connectDB();
+      const collection = db.collection('Dealabs');
+  
+      const legoSets = await collection.distinct('idLego'); // Récupérer tous les idLego uniques de la collection
+  
+      res.json({ legoSets });
+    } catch (error) {
+      console.error('Erreur lors de la récupération des LEGO sets :', error);
+      res.status(500).send('Erreur lors de la récupération des LEGO sets');
     }
   });
 

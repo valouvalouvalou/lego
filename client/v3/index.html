@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lego Deals</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Best Lego Deals</h1>
+  </header>
+
+  <div class="filters">
+    <select id="filter-select">
+      <option value="best-discount">By Best Discount</option>
+      <option value="most-commented">By Most Commented</option>
+      <option value="cheaper">Cheaper</option>
+      <option value="expensive">Expensive</option>
+      <option value="recently-published">Recently Published</option>
+      <option value="anciently-published">Anciently Published</option>
+    </select>
+
+    <select id="lego-set-id-select">
+      <!-- Dynamically populated with Lego Set IDs -->
+    </select>
+  </div>
+
+  <div id="deals-container">
+    <!-- Dynamically populated with deals -->
+  </div>
+
+  <footer>
+    <p>Powered by Best Lego Deals</p>
+  </footer>
+
+  <script src="portfolio.js"></script>
+  <script src="utils.js"></script>
+</body>
+</html>
